@@ -113,7 +113,7 @@ class Entry extends PureComponent {
     return (
       <OrgFile
         path={path}
-        shouldDisableDirtyIndicator={false}
+        shouldDisableDirtyIndicator={this.props.shouldLiveSync}
         shouldDisableActionDrawer={false}
         shouldDisableSyncButtons={false}
       />
@@ -196,6 +196,7 @@ const mapStateToProps = (state, props) => {
     activeModalPage: state.base.get('modalPageStack', List()).last(),
     pendingCapture: state.org.present.get('pendingCapture'),
     isDirty: state.org.present.get('isDirty'),
+    shouldLiveSync: state.base.get('shouldLiveSync'),
   };
 };
 
