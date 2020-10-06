@@ -140,7 +140,7 @@ class OrgFile extends PureComponent {
   }
 
   handleAddHeaderHotKey() {
-    this.props.org.addHeaderAndEdit(this.props.selectedHeaderId);
+    this.props.org.addHeaderAndEdit(this.props.selectedHeaderId, '');
   }
 
   handleRemoveHeaderHotKey() {
