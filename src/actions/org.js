@@ -167,9 +167,10 @@ export const updateHeaderDescription = (headerId, newRawDescription) => ({
   dirtying: true,
 });
 
-export const addHeader = headerId => ({
+export const addHeader = (headerId, defaultHeaderText) => ({
   type: 'ADD_HEADER',
   headerId,
+  defaultHeaderText,
   dirtying: true,
 });
 
@@ -178,8 +179,8 @@ export const selectNextSiblingHeader = headerId => ({
   headerId,
 });
 
-export const addHeaderAndEdit = headerId => dispatch => {
-  dispatch(addHeader(headerId));
+export const addHeaderAndEdit = (headerId, defaultHeaderText) => dispatch => {
+  dispatch(addHeader(headerId, defaultHeaderText));
   dispatch(selectNextSiblingHeader(headerId));
   dispatch(enterEditMode('title'));
 };
