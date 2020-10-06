@@ -208,7 +208,7 @@ class Header extends PureComponent {
   }
 
   handleAddNewHeader() {
-    this.props.org.addHeaderAndEdit(this.props.header.get('id'));
+    this.props.org.addHeaderAndEdit(this.props.header.get('id'), this.props.defaultHeaderText);
   }
 
   handleRest() {
@@ -430,6 +430,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     bulletStyle: state.base.get('bulletStyle'),
+    defaultHeaderText: state.base.get('defaultHeaderText') || '',
     focusedHeader,
     isFocused: !!focusedHeader && focusedHeader.get('id') === props.header.get('id'),
     inEditMode: !!state.org.present.get('editMode'),

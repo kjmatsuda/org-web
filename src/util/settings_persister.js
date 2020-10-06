@@ -111,6 +111,12 @@ export const persistableFields = [
     shouldStoreInConfig: true,
     default: new List(),
   },
+  {
+    category: 'base',
+    name: 'defaultHeaderText',
+    type: 'nullable',
+    shouldStoreInConfig: true,
+  },
 ];
 
 export const readOpennessState = () => {

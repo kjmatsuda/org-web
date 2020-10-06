@@ -23,6 +23,7 @@ const Settings = ({
   agendaDefaultDeadlineDelayUnit,
   hasUnseenChangelog,
   syncBackend,
+  defaultHeaderText,
   base,
 }) => {
   const handleSignOutClick = () =>
@@ -51,6 +52,8 @@ const Settings = ({
 
   const handleShouldStoreSettingsInSyncBackendChange = () =>
     base.setShouldStoreSettingsInSyncBackend(!shouldStoreSettingsInSyncBackend);
+
+  const handleDefaultHeaderTextChange = event => base.setDefaultHeaderText(event.target.value);
 
   const handleChangelogClick = () => base.pushModalPage('changelog');
 
@@ -133,6 +136,18 @@ const Settings = ({
             onSelect={handleAgendaDefaultDeadlineDelayUnitChange}
           />
         </div>
+      </div>
+
+      <div className="setting-container setting-container--vertical">
+        <div className="setting-label">
+          Default header text
+        </div>
+        <textarea
+          className="textarea template-textarea"
+          rows="1"
+          value={defaultHeaderText}
+          onChange={handleDefaultHeaderTextChange}
+        />
       </div>
 
       <div className="settings-buttons-container">
@@ -225,6 +240,7 @@ const mapStateToProps = (state, props) => {
     shouldLiveSync: state.base.get('shouldLiveSync'),
     shouldSyncOnBecomingVisibile: state.base.get('shouldSyncOnBecomingVisibile'),
     hasUnseenChangelog: state.base.get('hasUnseenChangelog'),
+    defaultHeaderText: state.base.get('defaultHeaderText') || '',
   };
 };
 

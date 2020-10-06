@@ -125,6 +125,11 @@ export const setShouldStoreSettingsInSyncBackend = newShouldStoreSettingsInSyncB
   };
 };
 
+export const setDefaultHeaderText = defaultHeaderText => ({
+  type: 'SET_DEFAULT_HEADER_TEXT',
+  defaultHeaderText,
+});
+
 export const setHasUnseenChangelog = newHasUnseenChangelog => ({
   type: 'SET_HAS_UNSEEN_CHANGELOG',
   newHasUnseenChangelog,

@@ -24,6 +24,8 @@ const setShouldStoreSettingsInSyncBackend = (state, action) =>
 
 const setShouldLiveSync = (state, action) => state.set('shouldLiveSync', action.shouldLiveSync);
 
+const setDefaultHeaderText = (state, action) => state.set('defaultHeaderText', action.defaultHeaderText);
+
 const setShouldSyncOnBecomingVisibile = (state, action) =>
   state.set('shouldSyncOnBecomingVisibile', action.shouldSyncOnBecomingVisibile);
 
@@ -97,6 +99,8 @@ export default (state = new Map(), action) => {
       return setShouldStoreSettingsInSyncBackend(state, action);
     case 'SET_SHOULD_LIVE_SYNC':
       return setShouldLiveSync(state, action);
+    case 'SET_DEFAULT_HEADER_TEXT':
+      return setDefaultHeaderText(state, action);
     case 'SET_SHOULD_SYNC_ON_BECOMING_VISIBLE':
       return setShouldSyncOnBecomingVisibile(state, action);
     case 'SET_HAS_UNSEEN_CHANGELOG':
