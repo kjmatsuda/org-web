@@ -30,6 +30,8 @@ import {
   pathAndPartOfListItemWithIdInHeaders,
   pathAndPartOfTimestampItemWithIdInHeaders,
   todoKeywordSetForKeyword,
+  firstKeywordCompleted,
+  firstKeywordNotCompleted,
 } from '../lib/org_utils';
 import { getCurrentTimestamp, applyRepeater, renderAsText } from '../lib/timestamps';
 import generateId from '../lib/id_generator';
@@ -112,6 +114,22 @@ const updateCookiesInAttributedStringWithChildCompletionStates = (parts, complet
   });
 };
 
+const updateTodoStateWithChildCompletionStates = (todoKeyword, todoKeywordSet, completionStates) => {
+  const doneCount = completionStates.filter(isDone => isDone).length;
+  const totalCount = completionStates.length;
+
+  if ((doneCount === totalCount) && !(todoKeywordSet.get('completedKeywords').includes(todoKeyword)))
+  {
+    todoKeyword = firstKeywordCompleted(todoKeywordSet);
+  }
+  else if ((doneCount < totalCount) && (todoKeywordSet.get('completedKeywords').includes(todoKeyword)))
+  {
+    todoKeyword = firstKeywordNotCompleted(todoKeywordSet);
+  }
+
+  return todoKeyword;
+};
+
 const updateCookiesOfHeaderWithId = (state, headerId) => {
   const headers = state.get('headers');
   const headerIndex = indexOfHeaderWithId(headers, headerId);
@@ -153,6 +171,9 @@ const updateCookiesOfHeaderWithId = (state, headerId) => {
     )
     .updateIn(['headers', headerIndex, 'titleLine'], titleLine =>
       titleLine.set('rawTitle', attributedStringToRawText(titleLine.get('title')))
+    )
+    .updateIn(['headers', headerIndex, 'titleLine', 'todoKeyword'], todoKeyword =>
+      updateTodoStateWithChildCompletionStates(todoKeyword, todoKeywordSetForKeyword(state.get('todoKeywordSets'), todoKeyword), completionStates)
     );
 };
 

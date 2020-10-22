@@ -534,3 +534,12 @@ export const isTodoKeywordCompleted = (todoKeywordSets, keyword) =>
   todoKeywordSetForKeyword(todoKeywordSets, keyword)
     .get('completedKeywords')
     .includes(keyword);
+
+export const firstKeywordCompleted = keywordSet =>
+  keywordSet
+  .get('completedKeywords')
+  .first();
+
+export const firstKeywordNotCompleted = keywordSet =>
+  keywordSet.find(keyword => !keywordSet.get('completedKeywords').includes(keyword)).first() ||
+  keywordSet.first();
