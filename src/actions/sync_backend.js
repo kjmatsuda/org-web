@@ -86,7 +86,15 @@ export const pushBackup = (pathOrFileId, contents) => {
     const client = getState().syncBackend.get('client');
     switch (client.type) {
       case 'Dropbox':
-        client.createFile(`${pathOrFileId}.org-web-bak`, contents);
+        const pathParts = pathOrFileId.split('/');
+
+        let directoryPath = '';
+        for (let index = 1; index <= pathParts.length - 2; index++) {
+          directoryPath += '/';
+          directoryPath += pathParts[index];
+        }
+        const fileName = pathParts[pathParts.length - 1];
+        client.createFile(`${directoryPath}/org-web-bak/${fileName}`, contents);
         break;
       case 'Google Drive':
         pathOrFileId = pathOrFileId.startsWith('/') ? pathOrFileId.substr(1) : pathOrFileId;
