@@ -35,6 +35,7 @@ class HeaderContent extends PureComponent {
       'handleAddNewTableColumn',
       'handleRemoveTableColumn',
       'handleCheckboxClick',
+      'handleListItemSelect',
       'handleTimestampClick',
       'handleInsertTimestamp',
       'handlePlanningItemTimestampClick',
@@ -162,6 +163,10 @@ class HeaderContent extends PureComponent {
     this.props.org.advanceCheckboxState(listItemId);
   }
 
+  handleListItemSelect(listItemId) {
+    this.props.org.setSelectedListItemId(listItemId);
+  }
+
   handleTimestampClick(timestampId) {
     this.props.base.activatePopup('timestamp-editor', { timestampId });
   }
@@ -196,6 +201,7 @@ class HeaderContent extends PureComponent {
     const {
       header,
       inEditMode,
+      // TODO K.Matsuda ここに selectedListItemId の追加必要か？
       selectedTableCellId,
       inTableEditMode,
       shouldDisableActions,
@@ -257,6 +263,8 @@ class HeaderContent extends PureComponent {
                 onAddNewTableColumn: this.handleAddNewTableColumn,
                 onRemoveTableColumn: this.handleRemoveTableColumn,
                 onCheckboxClick: this.handleCheckboxClick,
+                onListItemSelect: this.handleListItemSelect,
+                // TODO K.Matsuda ここに selectedListItemId の追加必要か？                
                 onTimestampClick: this.handleTimestampClick,
                 shouldDisableActions,
               }}
@@ -274,6 +282,7 @@ const mapStateToProps = (state, props) => {
       state.org.present.get('editMode') === 'description' &&
       state.org.present.get('selectedHeaderId') === props.header.get('id'),
     isSelected: state.org.present.get('selectedHeaderId') === props.header.get('id'),
+  // TODO K.Matsuda ここに selectedListItemId の追加必要か？    
     selectedTableCellId: state.org.present.get('selectedTableCellId'),
     inTableEditMode: state.org.present.get('editMode') === 'table',
   };

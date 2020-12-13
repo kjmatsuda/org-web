@@ -865,6 +865,8 @@ const advanceCheckboxState = (state, action) => {
   return state;
 };
 
+const setSelectedListItemId = (state, action) => state.set('selectedListItemId', action.listItemId);
+
 const setLastSyncAt = (state, action) => state.set('lastSyncAt', action.lastSyncAt);
 
 const setHeaderTags = (state, action) => {
@@ -1046,6 +1048,8 @@ export default (state = new Map(), action) => {
       return clearPendingCapture(state, action);
     case 'ADVANCE_CHECKBOX_STATE':
       return advanceCheckboxState(state, action);
+    case 'SET_SELECTED_LIST_ITEM_ID':
+      return setSelectedListItemId(state, action);
     case 'SET_LAST_SYNC_AT':
       return setLastSyncAt(state, action);
     case 'SET_HEADER_TAGS':
