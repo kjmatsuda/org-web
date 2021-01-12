@@ -201,10 +201,10 @@ class HeaderContent extends PureComponent {
     const {
       header,
       inEditMode,
-      // TODO K.Matsuda ここに selectedListItemId の追加必要か？
       selectedTableCellId,
       inTableEditMode,
       shouldDisableActions,
+      selectedListItemId,
     } = this.props;
     const { containerWidth } = this.state;
 
@@ -264,7 +264,7 @@ class HeaderContent extends PureComponent {
                 onRemoveTableColumn: this.handleRemoveTableColumn,
                 onCheckboxClick: this.handleCheckboxClick,
                 onListItemSelect: this.handleListItemSelect,
-                // TODO K.Matsuda ここに selectedListItemId の追加必要か？                
+                selectedListItemId: selectedListItemId,
                 onTimestampClick: this.handleTimestampClick,
                 shouldDisableActions,
               }}
@@ -282,9 +282,9 @@ const mapStateToProps = (state, props) => {
       state.org.present.get('editMode') === 'description' &&
       state.org.present.get('selectedHeaderId') === props.header.get('id'),
     isSelected: state.org.present.get('selectedHeaderId') === props.header.get('id'),
-  // TODO K.Matsuda ここに selectedListItemId の追加必要か？    
     selectedTableCellId: state.org.present.get('selectedTableCellId'),
     inTableEditMode: state.org.present.get('editMode') === 'table',
+    selectedListItemId: state.org.present.get('selectedListItemId'),
   };
 };
 
