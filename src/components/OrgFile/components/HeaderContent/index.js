@@ -36,6 +36,9 @@ class HeaderContent extends PureComponent {
       'handleRemoveTableColumn',
       'handleCheckboxClick',
       'handleListItemSelect',
+      'handleEnterListEditMode',
+      'handleAddNewListItem',
+      'handleRemoveListItem',
       'handleTimestampClick',
       'handleInsertTimestamp',
       'handlePlanningItemTimestampClick',
@@ -167,6 +170,18 @@ class HeaderContent extends PureComponent {
     this.props.org.setSelectedListItemId(listItemId);
   }
 
+  handleEnterListEditMode() {
+    this.props.org.enterEditMode('list');
+  }
+
+  handleAddNewListItem() {
+    this.props.org.addNewListItem();
+  }
+
+  handleRemoveListItem() {
+    this.props.org.removeListItem();
+  }
+
   handleTimestampClick(timestampId) {
     this.props.base.activatePopup('timestamp-editor', { timestampId });
   }
@@ -264,6 +279,9 @@ class HeaderContent extends PureComponent {
                 onRemoveTableColumn: this.handleRemoveTableColumn,
                 onCheckboxClick: this.handleCheckboxClick,
                 onListItemSelect: this.handleListItemSelect,
+                onEnterListEditMode: this.handleEnterListEditMode,
+                onAddNewListItem: this.handleAddNewListItem,
+                onRemoveListItem: this.handleRemoveListItem,
                 selectedListItemId: selectedListItemId,
                 onTimestampClick: this.handleTimestampClick,
                 shouldDisableActions,

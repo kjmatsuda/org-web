@@ -8,7 +8,6 @@ import Checkbox from '../../../../../UI/Checkbox/';
 import ListActionDrawer from './ListActionDrawer';
 
 import classNames from 'classnames';
-import { setSelectedListItemId } from '../../../../../../actions/org';
 
 export default ({ part, subPartDataAndHandlers }) => {
   // TODO K.Matsuda handleCheckboxClick を復旧させる

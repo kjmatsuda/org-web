@@ -32,6 +32,8 @@ import {
   todoKeywordSetForKeyword,
   firstKeywordCompleted,
   firstKeywordNotCompleted,
+  newListItem,
+  updateListContainingListItemId,
 } from '../lib/org_utils';
 import { getCurrentTimestamp, applyRepeater, renderAsText } from '../lib/timestamps';
 import generateId from '../lib/id_generator';
@@ -867,6 +869,52 @@ const advanceCheckboxState = (state, action) => {
 
 const setSelectedListItemId = (state, action) => state.set('selectedListItemId', action.listItemId);
 
+const updateDescriptionOfHeaderContainingListItem = (state, listItemId, header = null) => {
+  let headerIndex = -1;
+  const headers = state.get('headers');  
+  if (!header) {
+    const pathAndPart = pathAndPartOfListItemWithIdInHeaders(headers, listItemId);
+    headerIndex = pathAndPart.path[0];
+  }
+  else {
+    headerIndex = indexOfHeaderWithId(headers, header.get('id'));
+  }
+
+  if (headerIndex >= 0) {
+    return state.updateIn(['headers', headerIndex], header =>
+      header.set('rawDescription', attributedStringToRawText(header.get('description')))
+    );
+  }
+  else {
+    return state;
+  }
+};
+
+const addNewListItem = (state, action) => {
+  const selectedListItemId = state.get('selectedListItemId');
+  if (!selectedListItemId) {
+    return state;
+  }
+
+  state = state.update('headers', headers =>
+    updateListContainingListItemId(headers, selectedListItemId, itemIndex => items =>
+      items.insert(itemIndex + 1, newListItem())
+    )
+  );
+  return updateDescriptionOfHeaderContainingListItem(state, selectedListItemId);
+};
+
+const removeListItem = (state, action) => {
+  const selectedListItemId = state.get('selectedListItemId');
+  if (!selectedListItemId) {
+    return state;
+  }
+
+  // TODO K.Matsuda removeListItem
+
+  return state;
+};
+
 const moveListItemUp = state => {
   // TODO K.Matsuda moveListItemUp
   return state;
@@ -1080,6 +1128,10 @@ export default (state = new Map(), action) => {
       return advanceCheckboxState(state, action);
     case 'SET_SELECTED_LIST_ITEM_ID':
       return setSelectedListItemId(state, action);
+    case 'ADD_NEW_LIST_ITEM':
+      return addNewListItem(state, action);
+    case 'REMOVE_LIST_ITEM':
+      return removeListItem(state, action);
     case 'MOVE_LIST_ITEM_UP':
       return moveListItemUp(state, action);
     case 'MOVE_LIST_ITEM_DOWN':
