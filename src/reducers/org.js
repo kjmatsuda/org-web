@@ -34,6 +34,7 @@ import {
   firstKeywordNotCompleted,
   newListItem,
   updateListContainingListItemId,
+  headerThatContainsListItemId,
 } from '../lib/org_utils';
 import { getCurrentTimestamp, applyRepeater, renderAsText } from '../lib/timestamps';
 import generateId from '../lib/id_generator';
@@ -871,7 +872,7 @@ const setSelectedListItemId = (state, action) => state.set('selectedListItemId',
 
 const updateDescriptionOfHeaderContainingListItem = (state, listItemId, header = null) => {
   let headerIndex = -1;
-  const headers = state.get('headers');  
+  const headers = state.get('headers');
   if (!header) {
     const pathAndPart = pathAndPartOfListItemWithIdInHeaders(headers, listItemId);
     headerIndex = pathAndPart.path[0];
@@ -910,9 +911,17 @@ const removeListItem = (state, action) => {
     return state;
   }
 
-  // TODO K.Matsuda removeListItem
+  const containingHeader = headerThatContainsListItemId(state.get('headers'), selectedListItemId);
 
-  return state;
+  state = state.update('headers', headers =>
+    updateListContainingListItemId(headers, selectedListItemId, itemIndex => items =>
+      items.delete(itemIndex)
+    )
+  );
+
+  state = state.set('selectedListItemId', null);
+
+  return updateDescriptionOfHeaderContainingListItem(state, selectedListItemId, containingHeader);
 };
 
 const moveListItemUp = state => {

@@ -290,10 +290,16 @@ export const pathAndPartOfTimestampItemWithIdInAttributedString = (parts, timest
     .first();
 
 const listPartContainsItemId = (listPart, itemId) =>
-listPart
-  .get('items')
-  .some(item => item.get('id') === itemId);
-  
+  listPart
+    .get('items')
+    .some(item => item.get('id') === itemId);
+
+export const headerThatContainsListItemId = (headers, listItemId) => {
+  const pathAndPart = pathAndPartOfListItemWithIdInHeaders(headers, listItemId);
+  const headerIndex = pathAndPart.path[0];
+  return headers.get(headerIndex);
+};
+
 export const pathAndPartOfListItemWithIdInAttributedString = (parts, listItemId) =>
   parts
     .map((part, partIndex) => {
@@ -386,7 +392,7 @@ headers
   })
   .filter(result => !!result)
   .first();
-  
+
 export const pathAndPartOfListContainingItemIdInAttributedString = (parts, itemId) =>
 parts
   .map((part, partIndex) => {
@@ -402,7 +408,7 @@ parts
   })
   .filter(result => !!result)
   .first();
-  
+
 export const pathAndPartOfTimestampItemWithIdInHeaders = (headers, timestampId) =>
   headers
     .map((header, headerIndex) => {
@@ -544,7 +550,7 @@ export const newListItem = () =>
     titleLine: [],
     contents: [],
     forceNumber: null,
-    isCheckbox: false, 
+    isCheckbox: false,
   });
 
 export const updateListContainingListItemId = (headers, listItemId, updaterCallbackGenerator) => {
@@ -559,7 +565,7 @@ export const updateListContainingListItemId = (headers, listItemId, updaterCallb
     updaterCallbackGenerator(itemIndexContainingId)
   );
 };
-  
+
 export const timestampWithIdInAttributedString = (parts, timestampId) => {
   if (!parts) {
     return null;
